@@ -17,8 +17,19 @@ connect();  // Call connect function to establish MongoDB connection
 
 const app = express();
 // app.use(cors());
+const allowedOrigins = [
+  'https://ai-collab-frontend.vercel.app',
+  'http://localhost:5173'
+];
 app.use(cors({
-  origin: 'https://ai-collab-backend.onrender.com',
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  // origin: 'https://ai-collab-backend.onrender.com',
   credentials: true
 }));
 app.use(morgan('dev')); // Morgan for logging HTTP requests
