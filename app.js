@@ -16,7 +16,11 @@ import aiRoutes from './routes/ai.route.js';
 connect();  // Call connect function to establish MongoDB connection
 
 const app = express();
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: 'https://ai-collab-frontend.vercel.app',
+  credentials: true
+}));
 app.use(morgan('dev')); // Morgan for logging HTTP requests
 app.use(express.json());  // Middleware to parse JSON bodies
 app.use(express.urlencoded({ extended: true }));  // Middleware to parse URL-encoded bodies
